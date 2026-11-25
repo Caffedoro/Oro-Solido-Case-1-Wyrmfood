@@ -1,0 +1,2117 @@
+<head>
+<!-- jQuery library -->
+<script src="jQuery.js"></script>
+
+<!-- local CSS and JS -->
+<link rel="stylesheet" href="index.css" />
+<script src="common.js"></script>
+<script src="index.js"></script>
+<script src="actorSettings.js"></script>
+<script src="gameInfoWindowsSettings.js"></script>
+
+<!-- Bootstrap 5.3 -->
+<link href="bootstrap.min.css" rel="stylesheet" />
+<script src="bootstrap.bundle.min.js"></script>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+</head>
+
+<body data-bs-theme="dark">
+<div>
+<div class="card">
+<h1 class="card-header d-flex align-items-center">
+<span>Menu Scene</span>
+<span class="ms-auto badge bg-success fs-4 fw-light" id="currentVersion"></span>
+</h1>
+<div class="card-body">
+<div class="alert alert-success mb-2" id="newVersionAvailableBox" style="display: none;">
+<div class="row justify-content-space-between align-items-center">
+<p class="col mb-0" id="newVersionAvailableMessage">
+A new version of this Plugin is available!
+</p>
+<div class="col col-auto">
+<a class="btn btn-outline-light" id="newVersionAvailableLink"
+href="https://aerosys.itch.io/custom-ui" target="_blank">
+Download
+</a>
+</div>
+</div>
+</div>
+<div class="row align-items-stretch mb-4" id="newsBoxContainer">
+<div class="col d-flex">
+<div class="card justify-content-space-between flex-fill" id="newsBox">
+<div class="card-body row align-items-center">
+<p class="col mb-0" id="newsMessage">
+Fetching latest news...
+</p>
+<div class="col col-auto">
+<a class="btn btn-outline-light" id="newsLink"
+href="https://itch.io/c/5769353/rpg-maker-wysiwyg-menu-editors" target="_blank">
+Visit Itch.io
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="alert alert-warning mb-4" id="requiredCoreScriptVersionWarningBox">
+<p>
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin is designed to work with RPG Maker Core Scripts version
+<strong><span id="requiredCoreScriptVersion"></span></strong>
+or newer.
+</p>
+<p class="mb-0">
+Mind updating your Core Scripts.
+In RPG Maker, go to 'Game' -> 'Update Core Scripts'.
+</p>
+</div>
+
+<div class="alert alert-danger mb-4" id="altMenuScreenPluginOrderWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin is designed to be put below "AltMenuScreen" in the plugin list.
+Please adjust the order of your plugins in the Plugin Manager for optimal compatibility.
+</p>
+</div>
+
+<div class="alert alert-danger mb-4" id="hdLayoutPluginUsedWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin should not be used together with "HD Layout" plugin.
+Consider disabling it to avoid potential compatibility issues and improve compatibility.
+</p>
+</div>
+
+<div class="alert alert-warning mb-4" id="YEPCoreEngineWarning" style="display: none;">
+<p class="mb-4">
+<span class="bi bi-sign-merge-right me-1"></span>
+YEP Core Engine detected.
+</p>
+<p class="mb-0">
+We are open to further improving compatibility.
+If you are finding any issues, please retry with YEP plugins disabled to confirm that the issue
+is related to compatibility.
+<br>
+This info will help us a lot!
+</p>
+</div>
+
+<div class="alert alert-danger mb-4" id="YEPIncorrectPluginOrderWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin is designed to be put below YEP plugins in the plugin list.
+Please adjust the order of your plugins in the Plugin Manager for optimal compatibility.
+</p>
+</div>
+
+<div class="alert alert-danger mb-4" id="VisustellaIncorrectPluginOrderWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+This plugin is designed to be put below Visustella's plugins in the plugin list.
+Please adjust the order of your plugins in the Plugin Manager for optimal compatibility.
+</p>
+</div>
+
+<div class="alert alert-warning mb-4" id="VisustellaButtonAssistWindowWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+The "Button Assist Window" is coming from Visustella.
+Note that MK UI Customizer cannot control it.
+</p>
+</div>
+
+<div class="alert alert-warning mb-4" id="VisustellaMainMenuWarning" style="display: none;">
+<p class="mb-0">
+<i class="bi bi-exclamation-triangle me-2"></i>
+Visustella's "Main Menu Core" plugin may cause some visual issues in the Main Menu.
+Consider disabling it if you want to use MK UI Customizer.
+</p>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#quickTemplatesContent"
+type="button" role="tab">
+Quick Templates
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#layoutContent" type="button"
+role="tab">
+Layout
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#actorElementsContent"
+type="button" role="tab">
+Actors
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#menuCommandsContent"
+type="button" role="tab">
+Menu Commands
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#gameInfoWindowsContent"
+type="button" role="tab">
+Game Info Windows
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#rpgEssentialsContent"
+type="button" role="tab">
+RPG Essentials
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" data-bs-toggle="tab" data-bs-target="#globalSettingsContent"
+type="button" role="tab">
+Others
+</button>
+</li>
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane" id="menuCommandsContent" role="tabpanel">
+
+<div class="input-group mt-4">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandOpacity" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="commandPadding" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandItemHeight" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandRowSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandColumnSpacing" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-fonts me-2"></i>Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="commandFontSize" onblur="changeNumber(this.id, this.value)" />
+</div>
+
+<hr />
+
+<label class="form-label mt-4">Style</label>
+<select class="form-select mb-2" id="commandStyle" onchange="changeText(this.id, this.value)">
+<option value="iconAndText">Icon and Text</option>
+<option value="icon">Icon only</option>
+<option value="text">Text only</option>
+</select>
+<p class="info mb-4">Icons are configured in the Plugin Manager.</p>
+
+<label class="form-label">Text Align</label>
+<div class="text-align mb-4" data-config-field="commandTextAlign"></div>
+
+<label class="form-label">Window Background</label>
+<div class="window-bg-settings" data-config-field="commandBackgroundType"
+data-file="commandBackgroundFile" data-folder="img"></div>
+
+<div class="row mz">
+<div class="col">
+<label class="form-label">Item Background</label>
+<select class="form-select" id="commandItemBackgroundType"
+onchange="changeCommandItemBackgroundType(this.value)">
+<option value="default">Default</option>
+<option value="dimmed">RPG Maker Default</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="commandItemBackgroundFileBox">
+<input class="form-control" type="file" id="commandItemBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+
+<div style="display:none">
+<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCommandModal">
+<i class="bi bi-plus me-2"></i>
+Add Menu Command
+</button>
+
+<table class="table table-striped mt-4">
+<thead id="commandsTableHead"></thead>
+<tbody id="commandsTableBody"></tbody>
+</table>
+</div>
+
+</div>
+
+<div class="tab-pane show active" id="quickTemplatesContent" role="tabpanel">
+
+<div class="card">
+<h4 class="card-header">Layout</h4>
+<div class="card-body">
+<div class="d-flex gap-2">
+<div>
+<select class="form-select" id="layoutQuickTemplates"></select>
+</div>
+<button class="btn btn-outline-success" onclick="applyLayoutQuickTemplate()">
+Apply
+</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h4 class="card-header">Actors</h4>
+<div class="card-body">
+<div class="d-flex gap-2">
+<div>
+<select class="form-select" id="actorContentQuickTemplates"></select>
+</div>
+<button class="btn btn-outline-success" onclick="applyActorContentQuickTemplate()">
+Apply
+</button>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h4 class="card-header">Game Info Windows</h4>
+<div class="card-body">
+<div class="d-flex gap-2">
+<div>
+<select class="form-select" id="gameInfoWindowsQuickTemplates"></select>
+</div>
+<button class="btn btn-outline-success" onclick="applyGameInfoWindowsQuickTemplate()">
+Apply
+</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-pane" id="layoutContent" role="tabpanel">
+
+<div class="card">
+
+<h4 class="card-header">Actors</h4>
+<div class="card-body">
+
+<label class="form-label">Actor Limit</label>
+<div style="width: 5rem">
+<input class="form-control" type="number" id="actorLimit" min="1" max="10"
+placeholder="4" onblur="changeActorLimit(this.value)">
+</div>
+<p class="info">
+This setting does not affect the actual party size,
+only how many actors the plugin will display.
+</p>
+
+<div class="d-flex gap-4 mt-4">
+<div>
+<label class="form-label">Actor Canvas Width</label>
+<div style="width: 8rem">
+<div class="input-group">
+<span class="input-group-text">
+<i class="bi bi-arrows"></i>
+</span>
+<input class="form-control" type="number" id="actorWindowWidth"
+onblur="changeNumber(this.id, this.value)">
+</div>
+</div>
+</div>
+<div>
+<label class="form-label">Actor Canvas Height</label>
+<div style="width: 8rem">
+<div class="input-group">
+<span class="input-group-text">
+<i class="bi bi-arrows-vertical"></i>
+</span>
+<input class="form-control" type="number" id="actorWindowHeight"
+onblur="changeNumber(this.id, this.value)">
+</div>
+</div>
+</div>
+</div>
+
+<table class="table table-striped mt-4">
+<thead id="actorFormationTableHead"></thead>
+<tbody id="actorFormationTableBody"></tbody>
+</table>
+
+</div>
+</div>
+
+<div class="card">
+<h4 class="card-header">Command Window</h4>
+<div class="card-body">
+
+<div class="d-flex align-items-end gap-4">
+<div>
+<div class="9-dir" id="commandPosition" data-config-field="commandPosition"
+data-default-value="middleCenter">
+</div>
+</div>
+<div>
+<label class="form-label">Adjust</label>
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text">
+<i class="bi bi-arrow-right"></i>
+</span>
+<input type="number" class="form-control" id="commandOffsetX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2" style="width: 10rem;">
+<span class="input-group-text">
+<i class="bi bi-arrow-down"></i>
+</span>
+<input type="number" class="form-control" id="commandOffsetY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<label class="form-label mt-4">Orientation</label>
+<div class="form-row">
+<div class="btn-group">
+<button type="button" class="btn btn-outline-primary"
+id="commandWindowOrientationVertical"
+onclick="onCommandWindowOrientationChange('vertical')">
+<i class="bi bi-caret-down me-2"></i>
+Vertical
+</button>
+<button type="button" class="btn btn-outline-primary"
+id="commandWindowOrientationHorizontal"
+onclick="onCommandWindowOrientationChange('horizontal')">
+<i class="bi bi-caret-right me-2"></i>
+Horizontal
+</button>
+<button type="button" class="btn btn-outline-primary"
+id="commandWindowOrientationGrid"
+onclick="onCommandWindowOrientationChange('grid')">
+<i class="bi bi-grid me-2"></i>
+Grid
+</button>
+</div>
+</div>
+
+<div class="row mt-4">
+<div class="col">
+<label class="form-label">Width</label>
+<input class="form-control" type="number" min="1" max="10000" placeholder="240"
+style="width: 6rem" id="commandWidth"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="col">
+<div id="commandNumberOfColumnsBox">
+<label class="form-label">Columns</label>
+<input class="form-control" type="number" placeholder="auto" min="1"
+max="10" style="width: 6rem" id="commandNumberOfColumns"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+<div class="col">
+<div id="commandNumberOfLinesBox">
+<label class="form-label">Rows</label>
+<input class="form-control" type="number" placeholder="auto" min="1"
+max="10" style="width: 6rem" id="commandNumberOfLines"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="tab-pane" id="actorElementsContent" role="tabpanel">
+
+<button class="btn btn-success mt-4" onclick="onCreateActorElement()">
+<i class="bi bi-plus me-2"></i>
+Add Actor Element
+</button>
+
+<table class="table table-striped mt-4">
+<thead id="actorElementsTableHead"></thead>
+<tbody id="actorElementsTableBody"></tbody>
+</table>
+
+<label class="form-label mt-4">Background</label>
+<div class="window-bg-settings" data-config-field="actorWindowBackgroundType"
+data-file="actorWindowBackgroundFile" data-folder="img">
+</div>
+
+<label class="form-label">Opacity</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-transparency"></i></span>
+<input type="number" class="form-control" id="actorWindowOpacity"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+
+<hr>
+
+<label class="form-label">Actor Selection & Animation</label>
+<p class="info">
+Actions when the player is selecting an Actor.
+</p>
+
+<div class="input-group mt-4">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-chevron-double-right me-2"></i>Horz Dash
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="whenSelectingActorHorzDash" placeholder="0"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-chevron-double-down me-2"></i>Vert Dash
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="whenSelectingActorVertDash" placeholder="0"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 10rem" type="number"
+id="whenSelectingActorOpacity" placeholder="don't change"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+
+<div style="display:none">
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows-angle-expand me-2"></i>Scale
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 10rem" type="number"
+id="whenSelectingActorScale" placeholder="don't change"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">%</span>
+</div>
+<div class="input-group mt-2" style="width: 24rem">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-link-45deg me-2"></i>Anchor
+</span>
+<select class="form-select" id="actorWindowAnchor"
+onchange="changeText(this.id, this.value)">
+<option value="topLeft">Top Left</option>
+<option value="topCenter">Top Center</option>
+<option value="topRight">Top Right</option>
+<option value="middleLeft">Middle Left</option>
+<option value="middleCenter">Middle Center</option>
+<option value="middleRight">Middle Right</option>
+<option value="bottomLeft">Bottom Left</option>
+<option value="bottomCenter">Bottom Center</option>
+<option value="bottomRight">Bottom Right</option>
+</select>
+</div>
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-speedometer me-2"></i>Animation Speed
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 10rem" type="number"
+id="whenSelectingActorAnimationSpeed" onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">Frames</span>
+</div>
+
+</div>
+<div class="tab-pane" id="gameInfoWindowsContent" role="tabpanel">
+
+<button class="btn btn-success mt-4" onclick="onCreateGameInfoWindow()">
+<i class="bi bi-plus me-2"></i>
+Add Game Info Window
+</button>
+
+<table class="table table-striped mt-4">
+<thead id="gameInfoWindowsTableHead"></thead>
+<tbody id="gameInfoWindowsTableBody"></tbody>
+</table>
+
+<label class="form-label">Unknown Map Reference</label>
+<input class="form-control" type="text" id="unknownMapName" placeholder="Unknown Region"
+onblur="changeText(this.id, this.value)" />
+<p class="info">
+Text to show when the current Map has no Display Name
+</p>
+
+</div>
+
+<div class="tab-pane" id="rpgEssentialsContent" role="tabpanel">
+
+<p class="info mt-4 mb-2">
+Changes made here only affect the visuals in MK UI Customizer plugins.
+You will find other RPG Essentials in the Plugin Manager.
+</p>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#elementsCard">
+Elements
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="elementsCard">
+
+<table class="table table-striped align-middle" id="elements">
+<thead>
+<tr>
+<th>visible?</th>
+<th>Name</th>
+<th>Icon</th>
+</tr>
+</thead>
+<tbody id="elementsTableBody"></tbody>
+</table>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#skillTypeIconsCard">
+Skill Type Icons
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="skillTypeIconsCard">
+
+<table class="table table-striped align-middle" id="skillTypeIcons">
+<tbody id="skillTypeIconsTableBody"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+<div class="tab-pane" id="globalSettingsContent" role="tabpanel">
+
+<label class="form-label mt-4">Main Command Layout (all Scenes)</label>
+<div class="form-row mb-4">
+<div class="btn-group">
+<button type="button" class="btn" id="commandInputModeLeft"
+onclick="changeInputMode('left')">
+<i class="bi bi-layout-sidebar-inset me-2"></i>Left
+</button>
+<button type="button" class="btn" id="commandInputModeRight"
+onclick="changeInputMode('right')">
+<i class="bi bi-layout-sidebar-inset-reverse me-2"></i>Right
+</button>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#touchUI">
+Touch UI
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="touchUI">
+<div class="alert alert-warning mv">
+This section is only available in RPG Maker MZ.
+</div>
+<div class="mz">
+<label class="form-label">Show?</label>
+<select class="form-select mb-4" id="showTouchUIMode"
+onchange="changeText(this.id, this.value)">
+<option value="always">Yes (Default)</option>
+<option value="onMobile">When on mobile</option>
+<option value="never">No Touch UI</option>
+</select>
+<ul class="info mb-4">
+<li>
+When Touch UI is on, the player can still decide to disable it in the Game's
+Options
+menu.
+</li>
+<li>
+When Touch UI is off, then "Show Touch UI" is also removed from the Game's
+Options
+menu.
+</li>
+<li>
+When set to "When on mobile" then this Plugin calls an RPG Maker core code
+function
+to check whether the player is using a mobile device.
+This Plugin does not guarantee this check's reliability.
+</li>
+</ul>
+<hr>
+<div id="touchUIBox1">
+<div class="switch mb-4" data-config-field="keepTouchUISpace">
+Keep Touch UI Space?
+</div>
+<p class="info mb-4">
+Tip: You may want to enable this checkbox when you selected "Show Touch UI
+when on
+mobile" so you don't end up with 2 slightly different window sizes.
+</p>
+</div>
+<div id="touchUIBox2">
+<label class="form-label">Touch UI Area Height</label>
+<input class="form-control" type="number" style="width: 6rem" min="0"
+placeholder="52" id="touchUIAreaHeight"
+onblur="changeNumber(this.id, this.value)">
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#windows">
+Windows General
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="windows">
+<p class="info">
+<span class="bi bi-info-square me-1"></span>
+Settings will affect all Windows across all Scenes.
+</p>
+<div class="alert alert-warning mv">
+Some settings may not fully support RPG Maker MV.
+</div>
+<hr />
+
+<div class="row mz mb-4">
+<div class="col">
+<label class="form-label">Item Background</label>
+<select class="form-select" id="windowItemBackgroundType"
+onchange="onWindowItemBackgroundTypeChange(this.value)">
+<option value="dimmed">RPG Maker Default</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="windowItemBackgroundFileBox">
+<input class="form-control" type="file" id="windowItemBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowOpacity" onblur="changeNumber(this.id, this.value)"
+placeholder="192" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="windowPadding" onblur="changeNumber(this.id, this.value)"
+placeholder="18" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-fonts me-2"></i>Line Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="windowLineHeight" onblur="changeNumber(this.id, this.value)"
+placeholder="36" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowItemHeight" onblur="changeNumber(this.id, this.value)"
+placeholder="36" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-square me-2"></i>
+Item Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowItemPadding" onblur="changeNumber(this.id, this.value)"
+placeholder="8" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows-vertical me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowRowSpacing" onblur="changeNumber(this.id, this.value)"
+placeholder="4" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-arrows me-2"></i>
+Item Spacing
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="windowColumnSpacing" onblur="changeNumber(this.id, this.value)"
+placeholder="8" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text" style="width: 200px">
+<i class="bi bi-fonts me-2"></i>
+Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="fontSize" onblur="changeNumber(this.id, this.value)" placeholder="26" />
+</div>
+<hr class="mt-4 mb-4" />
+<label class="form-label">Cursor Style</label>
+<select class="form-select mb-4" id="cursorStyle"
+onchange="onCursorStyleChange(cursorStyle.value)">
+<option value="default">Default</option>
+<option value="image">Custom Image</option>
+</select>
+<div id="cursorStyleBox">
+<input class="form-control" type="file" id="cursorBackgroundFile" accept="image/png"
+onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-4">File must be located in game/img/system</p>
+
+<label class="form-label">Adjust</label>
+<div class="d-flex gap-4 mb-4">
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text">
+x
+</span>
+<input type="number" class="form-control" id="cursorAdjustX"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group" style="width: 10rem;">
+<span class="input-group-text">
+y
+</span>
+<input type="number" class="form-control" id="cursorAdjustY"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group">
+<span class="input-group-text">
+<i class="bi bi-arrows-angle-expand me-2"></i>Scale
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem"
+type="number" id="cursorScale"
+onblur="changeNumber(this.id, this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+</div>
+<div class="switch mb-4" data-config-field="blinkCursor">
+Blink?
+</div>
+<hr class="mt-4 mb-4" />
+<label class="form-label mb-2">When Command is disabled</label>
+<p></p>
+<label class="form-label">Text Opacity</label>
+<input class="form-control mb-4" type="number" style="width: 6rem"
+id="disabledTextOpacity" onblur="changeNumber(this.id, this.value)" />
+<div class="d-flex align-items-end">
+<div class="me-2">
+<div class="switch" data-config-field="overrideDisabledTextColor"
+data-onchange="onOverrideDisabledTextColorChange">
+Change Text Color?
+</div>
+</div>
+<input type="color" class="input-group-text form-control-color"
+id="disabledTextColor" onchange="changeColor(this.id, this.value)" />
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#gaugeColors">
+Gauge Colors
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="gaugeColors">
+
+<div class="alert alert-secondary mv">
+MV may not support every color picker.
+</div>
+
+<div class="d-flex mb-2">
+<button class="btn btn-outline-success me-2" onclick="healActor()">
+<i class="bi bi-eye me-2"></i>Regular
+</button>
+<button class="btn btn-outline-success me-2" onclick="makeActorCrisis()">
+<i class="bi bi-eye me-2"></i>Crisis
+</button>
+<button class="btn btn-outline-success me-2" onclick="makeActorDead()">
+<i class="bi bi-eye me-2"></i>Dead
+</button>
+<button class="btn btn-outline-success me-2" onclick="makeActorExpMaxedOut()">
+<i class="bi bi-eye me-2"></i>
+Make Actor Max Level
+</button>
+<button class="btn btn-outline-success" onclick="undoMakeActorExpMaxedOut()">
+<i class="bi bi-eye me-2"></i>
+Undo Max Level
+</button>
+</div>
+<p class="info mb-4">By default, TP cannot be previewed outside from battles</p>
+
+<div class="card">
+<h4 class="card-header">Labels & Values</h4>
+<div class="card-body">
+
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Label</label>
+<div class="text-color-picker" data-config-field="hpLabelTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP Value</label>
+<div class="text-color-picker" data-config-field="hpValueTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP (Crisis)</label>
+<div class="text-color-picker" data-config-field="hpCrisisTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">HP (Knockout)</label>
+<div class="text-color-picker" data-config-field="hpDeadTextColor">
+</div>
+</div>
+</div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP Label</label>
+<div class="text-color-picker" data-config-field="mpLabelTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP Value</label>
+<div class="text-color-picker" data-config-field="mpValueTextColor">
+</div>
+</div>
+
+<div class="d-flex flex-column me-4">
+<label class="form-label">MP (Depleted)</label>
+<div class="text-color-picker" data-config-field="mpEmptyTextColor">
+</div>
+</div>
+
+</div>
+<div class="d-flex mb-4">
+<div class="d-flex flex-column me-4">
+<label class="form-label">TP Label</label>
+<div class="text-color-picker" data-config-field="tpLabelTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">TP Value</label>
+<div class="text-color-picker" data-config-field="tpValueTextColor">
+</div>
+</div>
+</div>
+
+<div class="d-flex">
+<div class="d-flex flex-column me-4">
+<label class="form-label">Level Label</label>
+<div class="text-color-picker" data-config-field="levelLabelTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">Level Value</label>
+<div class="text-color-picker" data-config-field="levelValueTextColor">
+</div>
+</div>
+<div class="d-flex flex-column me-4">
+<label class="form-label">Level (Maxed out)</label>
+<div class="text-color-picker"
+data-config-field="levelMaxedOutTextColor">
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card mt-4">
+<h4 class="card-header">Gauge Colors</h4>
+<div class="card-body">
+
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">HP</label>
+<div class="2-color-picker" data-config-field="gaugeColorHp"></div>
+</div>
+<div class="col">
+<label class="form-label">HP (Crisis)</label>
+<div class="2-color-picker" data-config-field="gaugeColorHpCrisis">
+</div>
+</div>
+<div class="col"></div>
+</div>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">MP</label>
+<div class="2-color-picker" data-config-field="gaugeColorMp"></div>
+</div>
+<div class="col">
+<label class="form-label">TP</label>
+<div class="2-color-picker" data-config-field="gaugeColorTp"></div>
+</div>
+<div class="col">
+<label class="form-label">ATB</label>
+<div class="2-color-picker" data-config-field="gaugeColorAtb"></div>
+</div>
+</div>
+<div class="row mb-4">
+<div class="col">
+<label class="form-label">Exp</label>
+<div class="2-color-picker" data-config-field="gaugeColorExp"></div>
+</div>
+<div class="col">
+<label class="form-label">Exp (Max Level)</label>
+<div class="2-color-picker" data-config-field="gaugeColorExpMaxedOut">
+</div>
+</div>
+<div class="col"></div>
+</div>
+
+<hr>
+<label class="form-label mz">Background</label>
+<div class="row mb-4 mz">
+<div class="col">
+<label class="form-label">HP</label>
+<div class="color-picker" data-config-field="gaugeBackgroundColorHp">
+</div>
+</div>
+<div class="col">
+<label class="form-label">HP (Crisis)</label>
+<div class="color-picker"
+data-config-field="gaugeBackgroundColorHpCrisis">
+</div>
+</div>
+<div class="col">
+<label class="form-label">HP (Knockout)</label>
+<div class="color-picker"
+data-config-field="gaugeBackgroundColorHpDead"></div>
+</div>
+</div>
+<div class="row mb-4 mz">
+<div class="col">
+<label class="form-label">MP</label>
+<div class="color-picker" data-config-field="gaugeBackgroundColorMp">
+</div>
+</div>
+<div class="col">
+<label class="form-label">TP</label>
+<div class="color-picker" data-config-field="gaugeBackgroundColorTp">
+</div>
+</div>
+<div class="col">
+<label class="form-label">ATB</label>
+<div class="color-picker" data-config-field="gaugeBackgroundColorAtb">
+</div>
+</div>
+</div>
+<label class="form-label">Exp</label>
+<div class="color-picker" data-config-field="gaugeBackgroundColorExp">
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#scene">
+Menu Background
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse" id="scene">
+
+<div class="d-flex align-items-end gap-4">
+<div>
+<label class="form-label">Background</label>
+<select class="form-select" id="sceneBackgroundType"
+onchange="onSceneBackgroundTypeChange(sceneBackgroundType.value)">
+<option value="mapSprite">Map Sprite</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div>
+<div id="sceneBackgroundFileBox">
+<input class="form-control" type="file" id="sceneBackgroundFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game directory/img
+</p>
+</div>
+</div>
+</div>
+
+<div id="sceneBackgroundEffectsBox" class="mt-4">
+<div class="d-flex align-items-end">
+<div>
+<label class="form-label">Effects</label>
+<select class="form-select" id="sceneBackgroundEffects"
+onchange="changeText(this.id, this.value)">
+<option value="blurred">Blurred</option>
+<option value="blackWhite">(MZ only) Black White</option>
+<option value="sepia">(MZ only) Sepia</option>
+<option value="none">None</option>
+</select>
+</div>
+<p class="info ms-4 mt-4 mb-0" id="bgEffectNotSupported">
+MV: Blur effect is only supported when using map sprite as background.
+</p>
+</div>
+<div class="alert alert-secondary mv mt-4">
+<span class="bi bi-info-square me-1"></span>
+Some filters may not work in RPG Maker MV.<br>
+You may need to close and reopen the game menu to see changes.
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card">
+<h2 class="card-header d-flex justify-content-between collapsed" data-bs-toggle="collapse"
+data-bs-target="#helpWindowCard">
+Help Window
+<button class="btn btn-outline-secondary">
+<i class="bi bi-chevron-up arrow"></i>
+</button>
+</h2>
+<div class="card-body collapse mb-4" id="helpWindowCard">
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-card-text me-2"></i>Line Numbers
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="helpLineNumbers" placeholder="2" min="1"
+onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="helpBackOpacity" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="helpPadding" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows-vertical me-2"></i>Line Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="helpLineHeight" onblur="changeNumber(this.id, this.value)" />
+</div>
+<div class="input-group mb-4">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-fonts me-2"></i>Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="helpFontSize" onblur="changeNumber(this.id, this.value)" />
+</div>
+
+<label class="form-label">Window Background</label>
+<div class="window-bg-settings" data-config-field="helpBackgroundType"
+data-file="helpBackgroundFile" data-folder="img"></div>
+
+<div class="row align-items-start mb-4">
+<div class="col">
+<div class="switch mb-4" data-config-field="shouldOverrideHelpWindow"
+data-onchange="onOverrideHelpWindowChange">
+Individual Window File?
+</div>
+</div>
+<div class="col">
+<div id="helpWindowFileBox">
+<input class="form-control" type="file" id="helpWindowFile"
+accept="image/png" onchange="changeFile(this.id, 'img', this.value)" />
+<p class="info mb-0">
+File must be located in your game/img/system
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="addCommandModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Add Menu Command</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<!-- Form content for adding a menu command goes here -->
+</div>
+<div class="modal-footer">
+<button class="btn btn-success" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal large-modal fade" id="addActorElementModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Add Actor Element</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+<div class="d-flex gap-4">
+<div>
+<label class="form-label">Type</label>
+<select class="form-select" id="actorElementType"
+onchange="changeActorElementType(this.value)">
+<option value="name">Name</option>
+<option value="nickname">Nickname</option>
+<option value="classname">Class Name</option>
+<option value="portrait">Portrait</option>
+<option value="hpMpTp">HP/MP/TP</option>
+<option value="states">States</option>
+<option value="exp">Level & Exp</option>
+<option value="actorParams">Parameters</option>
+<option value="customGauge">Custom Gauge</option>
+<option value="picture">Picture</option>
+<!-- option value="window">Window</option -->
+<option value="text">Text</option>
+<option value="script">Script</option>
+</select>
+</div>
+<div id="hpMpTpSubTypeBox">
+<label class="form-label">Type</label>
+<select class="form-select" id="hpMpTpSubType"
+onchange="changeActorElementProperty(this.id, this.value)">
+<option value="hp">HP</option>
+<option value="mp">MP</option>
+<option value="tp">TP</option>
+</select>
+</div>
+<div style="display:none">
+<div id="parameterFamilyBox">
+<label class="form-label">Parameter Family</label>
+<select class="form-select" id="parameterFamily"
+onchange="changeActorParameterFamily(this.value)">
+<option value="primary">Basic</option>
+<option value="xParam">Ex Parameters</option>
+<option value="sParam">Sp Parameters</option>
+</select>
+</div>
+</div>
+<div id="baseParameterBox">
+<label class="form-label">Parameter</label>
+<select class="form-select" id="baseParameter"
+onchange="changeActorElementNumber(this.id, this.value)">
+<option value="0">Max HP</option>
+<option value="1">Max MP</option>
+<option value="2">Attack</option>
+<option value="3">Defense</option>
+<option value="4">Magic Attack</option>
+<option value="5">Magic Defense</option>
+<option value="6">Agility</option>
+<option value="7">Luck</option>
+</select>
+</div>
+<div id="xParameterBox">
+<label class="form-label">Parameter</label>
+<select class="form-select" id="xParameter"
+onchange="changeActorElementNumber(this.id, this.value)">
+<option value="0">Hit Rate</option>
+<option value="1">Evasion Rate</option>
+<option value="2">Critical Rate</option>
+<option value="3">Critical Evasion</option>
+<option value="4">Magic Evasion</option>
+<option value="5">Magic Reflection</option>
+<option value="6">Counter Attack</option>
+<option value="7">HP Regeneration</option>
+<option value="8">MP Regeneration</option>
+<option value="9">TP Regeneration</option>
+</select>
+</div>
+<div id="sParameterBox">
+<label class="form-label">Parameter</label>
+<select class="form-select" id="sParameter"
+onchange="changeActorElementNumber(this.id, this.value)">
+<option value="0">Target Rate (Aggro)</option>
+<option value="1">Guard</option>
+<option value="2">Recovery Effect</option>
+<option value="3">Pharmacology</option>
+<option value="4">MP Cost Rate</option>
+<option value="5">TP Charge Rate</option>
+<option value="6">Physical Damage</option>
+<option value="7">Magic Damage</option>
+<option value="8">Floor Damage</option>
+<option value="9">Experience Rate</option>
+</select>
+</div>
+</div>
+
+<ul class="nav nav-tabs mt-4" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#actorElementPositionContent">
+Position
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#actorElementPropertiesContent">
+Properties
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#actorElementConditionsContent">
+Conditions
+</button>
+</li>
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane show active" id="actorElementPositionContent" role="tabpanel">
+
+<div class="row align-items-bottom mt-4">
+<div class="col">
+<div class="9-dir" id="actorElementPosition9Dir"
+onchange="changeActorElementPosition9Dir"></div>
+</div>
+<div class="col">
+<label class="form-label">Adjust</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text">
+<i class="bi bi-arrow-right"></i>
+</span>
+<input type="number" class="form-control" id="actorElementX"
+onblur="changeActorElementNumber('x', this.value)" />
+</div>
+<div class="input-group mt-2" style="width: 8rem">
+<span class="input-group-text">
+<i class="bi bi-arrow-down"></i>
+</span>
+<input type="number" class="form-control" id="actorElementY"
+onblur="changeActorElementNumber('y', this.value)" />
+</div>
+</div>
+</div>
+
+<div class="d-flex gap-4">
+<div id="actorElementWidthBox">
+<label class="form-label mt-4">Width</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="actorElementWidth"
+placeholder="auto" onblur="changeActorElementNumber('width', this.value)" />
+</div>
+</div>
+<div id="actorElementHeightBox">
+<label class="form-label mt-4">Height</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="actorElementHeight"
+placeholder="auto"
+onblur="changeActorElementNumber('height', this.value)" />
+</div>
+</div>
+</div>
+
+</div>
+<div class="tab-pane" id="actorElementPropertiesContent" role="tabpanel">
+
+<div id="actorElementTextBox">
+<label class="form-label mt-4">Text</label>
+<input type="text" class="form-control" id="actorElementText"
+onblur="changeActorElementProperty('text', this.value)" />
+</div>
+
+<div id="actorElementPortraitBox">
+<label class="form-label mt-4">Portrait</label>
+<select class="form-select" id="actorElementPortrait"
+onchange="changeActorElementProperty('portrait', this.value)">
+<option value="face">Face</option>
+<option value="battler">SV Battler</option>
+<option value="mapSprite">Map Sprite</option>
+<option value="portrait">Custom Image</option>
+</select>
+</div>
+
+<div id="actorElementGaugeSettingsBox">
+<div class="d-flex align-items-end gap-4 mt-4">
+<div>
+<label class="form-label">Label</label>
+<div style="width: 6rem">
+<input type="text" class="form-control" id="actorElementGaugeLabel"
+onblur="changeActorElementProperty('gaugeLabel', this.value)" />
+</div>
+</div>
+<div id="actorElementGaugeLabelColorBox">
+<div class="text-color-picker" id="actorElementGaugeLabelColor"
+onchange="changeActorElementGaugeLabelColor"></div>
+</div>
+</div>
+</div>
+
+<div id="actorElementCustomGaugeBox">
+<label class=" form-label mt-4">Value Color</label>
+<div class="text-color-picker" id="elementGaugeValueColor"
+onchange="changeActorElementGaugeValueColor"></div>
+
+<label class="form-label mt-4">Gauge Colors</label>
+<div class="d-flex gap-4">
+<div>
+<div class="color-picker" id="elementGaugeColor1"
+onchange="changeActorElementGaugeColor1">
+</div>
+</div>
+<div>
+<div class="color-picker" id="elementGaugeColor2"
+onchange="changeActorElementGaugeColor2">
+</div>
+</div>
+</div>
+
+<label class="form-label mt-4">Current Value Eval</label>
+<div class="input-group">
+<span class="input-group-text">JavaScript</span>
+<input type="text" class="form-control" id="actorElementGaugeCurrentEval"
+onblur="changeActorElementProperty('gaugeCurrentEval', this.value)" />
+</div>
+
+<label class="form-label mt-4">Max Value Eval</label>
+<div class="input-group">
+<span class="input-group-text">JavaScript</span>
+<input type="text" class="form-control" id="actorElementGaugeMaxEval"
+onblur="changeActorElementProperty('gaugeMaxEval', this.value)" />
+</div>
+<p class="info mt-4">Example:</p>
+<div class="custom-code">
+actor.param(2)
+</div>
+</div>
+
+<div id="actorElementCustomEvalBox">
+<label class="form-label mt-4">Eval</label>
+<div class="input-group">
+<span class="input-group-text">JavaScript</span>
+<input type="text" class="form-control" id="actorElementCustomEval"
+onblur="changeActorElementProperty('customEval', this.value)" />
+</div>
+<p class="info mt-4">Example:</p>
+<div class="custom-code">
+actor.name()
+</div>
+</div>
+
+<div class="d-flex align-items-end gap-4">
+<div class="mt-4" id="actorElementFontSizeBox">
+<label class="form-label">Font Size</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-fonts"></i></span>
+<input type="number" class="form-control" id="actorElementFontSize"
+onblur="changeActorElementNumber('fontSize', this.value)" />
+</div>
+</div>
+<div class="mt-4" id="actorElementTextColorBox">
+<div class="text-color-picker" id="actorElementTextColor"
+onchange="changeActorElementTextColor">
+</div>
+</div>
+</div>
+
+<div id="actorElementTextAlignBox">
+<label class="form-label mt-4">Text Align</label>
+
+<div>
+<div class="btn-group btn-group-lg">
+<button class="btn" id="actorElementTextAlignLeft"
+onclick="changeActorElementTextAlign('left')">
+<i class="bi bi-text-left"></i>
+</button>
+<button class="btn" id="actorElementTextAlignCenter"
+onclick="changeActorElementTextAlign('center')">
+<i class="bi bi-text-center"></i>
+</button>
+<button class="btn" id="actorElementTextAlignRight"
+onclick="changeActorElementTextAlign('right')">
+<i class="bi bi-text-right"></i>
+</button>
+</div>
+</div>
+</div>
+
+<div id="actorElementPictureBox">
+<label class="form-label mt-4">Picture</label>
+<input type="file" class="form-control" accept=".png"
+onchange="changeActorElementFile('pictureFile', this.value)" />
+<p class="info">
+File must be located in "your game/img" directory.
+</p>
+</div>
+
+<div id="actorElementScaleBox">
+<label class="form-label mt-4">Scale</label>
+<div class="input-group" style="width: 12rem">
+<span class="input-group-text"><i class="bi bi-arrows-angle-expand"></i></span>
+<input type="number" class="form-control" id="actorElementScale"
+onblur="changeActorElementNumber('scale', this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+
+<div id="actorElementStatesBox">
+<div class="d-flex gap-4 mt-4">
+<button class="btn btn-outline-success" onclick="applyStates()">
+<i class="bi bi-eye me-2"></i>
+Apply States
+</button>
+<button class="btn btn-outline-success" onclick="clearStates()">
+<i class="bi bi-eye me-2"></i>
+Clear States
+</button>
+</div>
+</div>
+
+</div>
+
+<div class="tab-pane" id="actorElementConditionsContent" role="tabpanel">
+
+<div class="d-flex align-items-end gap-4 mt-4">
+<div>
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="actorElementRequireSwitch"
+data-bs-toggle="switch" data-bs-target="#actorElementRequiredSwitchBox"
+onchange="changeActorElementRequireSwitch(this.checked)">
+<label class="form-check-label">Switch</label>
+</div>
+</div>
+
+<div id="actorElementRequiredSwitchBox">
+<div class="d-flex align-items-baseline">
+<div class="input-group me-4" style="width: 8rem">
+<span class="input-group-text">Switch</span>
+<input type="number" class="form-control" id="actorElementRequiredSwitchId"
+onblur="changeActorElementNumber('requiredSwitchId', this.value)" />
+</div>
+<p class="mb-0 me-2">is</p>
+<select class="form-select" id="actorElementRequiredSwitchValue"
+onchange="changeActorElementProperty('requiredSwitchValue', this.value)">
+<option value="on">ON</option>
+<option value="off">OFF</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="actorElementRequireVariable"
+data-bs-toggle="switch" data-bs-target="#actorElementRequiredVariableBox"
+onchange="changeActorElementRequireVariable(this.checked)">
+<label class="form-check-label">Variable</label>
+</div>
+<div id="actorElementRequiredVariableBox">
+<div class="d-flex align-items-baseline mt-2">
+
+<div class="input-group me-4" style="width: 8rem">
+<span class="input-group-text">Var</span>
+<input type="number" class="form-control" id="actorElementRequiredVariableId"
+onblur="changeActorElementNumber('requiredVariableId', this.value)" />
+</div>
+<select class="form-select me-2" id="actorElementRequiredVariableOperator"
+onchange="changeActorElementProperty('requiredVariableOperator', this.value)">
+<option value="greaterThanOrEqual">&ge;</option>
+<option value="lessThanOrEqual">&le;</option>
+<option value="equal">=</option>
+<option value="notEqual">not</option>
+</select>
+<div style="width: 6rem">
+<input type="number" class="form-control" id="actorElementRequiredVariableValue"
+placeholder="0"
+onblur="changeActorElementNumber('requiredVariableValue', this.value)" />
+</div>
+</div>
+</div>
+
+<div class="d-flex align-items-end gap-4 mt-4">
+<div>
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="actorElementRequireClass"
+data-bs-toggle="switch" data-bs-target="#actorElementRequiredClassBox"
+onchange="changeActorElementRequireClass(this.checked)">
+<label class="form-check-label">Is Class...</label>
+</div>
+</div>
+<div id="actorElementRequiredClassBox">
+<select class="form-select gameclass-select" id="actorElementRequiredClassId"
+onchange="changeActorElementNumber('requiredClassId', this.value)">
+</select>
+</div>
+</div>
+
+<div class="d-flex align-items-end gap-4 mt-4">
+<div>
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox"
+id="actorElementRequireVitalStatus" data-bs-toggle="switch"
+data-bs-target="#actorElementRequiredVitalStatusBox"
+onchange="changeActorElementRequireVitalStatus(this.checked)">
+<label class="form-check-label">Vital Status</label>
+</div>
+</div>
+<div id="actorElementRequiredVitalStatusBox">
+<select class="form-select" id="actorElementRequiredVitalStatus"
+onchange="changeActorElementProperty('requiredVitalStatus', this.value)">
+<option value="alive">Alive</option>
+<option value="dead">K.O.</option>
+</select>
+</div>
+</div>
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="actorElementRequireNotetag"
+data-bs-toggle="switch" data-bs-target="#actorElementRequiredNotetagBox"
+onchange="changeActorElementRequireNotetag(this.checked)">
+<label class="form-check-label">Notetag</label>
+</div>
+<div id="actorElementRequiredNotetagBox">
+<label class="form-label mt-4">
+The Actor, and/or their Class, Equipment, States, etc.
+</label>
+<select class="form-select" id="actorElementRequiredNotetagMode"
+onchange="changeActorElementProperty('requiredNotetagMode', this.value)">
+<option value="mustHave">at least one must have</option>
+<option value="mustNotHave">none must have</option>
+</select>
+<label class="form-label mt-4">This Notetag</label>
+<input type="text" class="form-control" id="actorElementRequiredNotetag"
+placeholder="Example: Protagonist"
+onblur="changeActorElementProperty('requiredNotetag', this.value)" />
+<p class="info mt-0">Excluding &lt; and &gt;</p>
+
+<p class="info mt-4">Example on Actor note field in database:</p>
+<div class="custom-code">&lt;Protagonist&gt;</div>
+</div>
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="actorElementRequireScript"
+data-bs-toggle="switch" data-bs-target="#actorElementRequiredScriptBox"
+onchange="changeActorElementRequireScript(this.checked)">
+<label class="form-check-label">Script</label>
+</div>
+<div id="actorElementRequiredScriptBox">
+<div class="input-group mt-2">
+<span class="input-group-text">JavaScript</span>
+<input type="text" class="form-control" id="actorElementRequiredScript"
+onblur="changeActorElementProperty('requiredScript', this.value)" />
+</div>
+
+<p class="info mt-4">Examples:</p>
+<div class="custom-code">
+<pre>actor.isAlive()
+$gameSwitches.value(1) &amp;&amp; $gameVariables.value(1) &gt; 5</pre>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-success" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="deleteActorElementModal" tabindex="-1">
+<div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal-content">
+
+<div class="modal-header">
+<h5 class="modal-title mb-0">Delete?</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+<p class="info mb-0">
+This action cannot be undone.
+</p>
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-danger" onclick="confirmDeleteActorElement()" data-bs-dismiss="modal">
+Delete
+</button>
+<button class="btn btn-outline-secondary" data-bs-dismiss="modal">No, keep it</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="modal large-modal fade" id="addGameInfoWindowModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Add Game Info Window</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+
+<label class="form-label">Name</label>
+<input type="text" class="form-control" id="gameInfoWindowName"
+onblur="changeGameInfoWindowProperty('name', this.value)" />
+<p class="info">
+For internal reference only.
+</p>
+
+<ul class="nav nav-tabs mt-4" role="tablist">
+<li class="nav-item" role="presentation">
+<button class="nav-link active" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#gameInfoWindowPositionContent">
+Position
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#gameInfoWindowPropertiesContent">
+Properties
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#gameInfoWindowContentContent">
+Content
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button class="nav-link" type="button" role="tab" data-bs-toggle="tab"
+data-bs-target="#gameInfoWindowConditionsContent">
+Conditions
+</button>
+</li>
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane show active" id="gameInfoWindowPositionContent" role="tabpanel">
+
+<div class="row align-items-bottom mt-4">
+<div class="col">
+<div class="9-dir" id="gameInfoWindowPosition9Dir"
+onchange="changeGameInfoWindowPosition9Dir"></div>
+</div>
+<div class="col">
+<label class="form-label">Adjust</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text">
+<i class="bi bi-arrow-right"></i>
+</span>
+<input type="number" class="form-control" id="gameInfoWindowX"
+onblur="changeGameInfoWindowNumber('x', this.value)" />
+</div>
+<div class="input-group mt-2" style="width: 8rem">
+<span class="input-group-text">
+<i class="bi bi-arrow-down"></i>
+</span>
+<input type="number" class="form-control" id="gameInfoWindowY"
+onblur="changeGameInfoWindowNumber('y', this.value)" />
+</div>
+</div>
+</div>
+
+<div id="gameInfoWindowWidthBox">
+<label class="form-label mt-4">Width</label>
+
+<div class="d-flex gap-4">
+<div class="form-row">
+<div class="btn-group">
+<button type="button" class="btn btn-outline-primary"
+id="gameInfoWindowWidthModeFixed"
+onclick="changeGameInfoWindowWidthMode('fixed')">
+Absolute
+</button>
+<button type="button" class="btn btn-outline-primary"
+id="gameInfoWindowWidthModePercentage"
+onclick="changeGameInfoWindowWidthMode('percentage')">
+Relative to Screen
+</button>
+</div>
+</div>
+
+<div id="gameInfoWindowWidthFixedBox">
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control" id="gameInfoWindowWidth"
+placeholder="auto"
+onblur="changeGameInfoWindowNumber('width', this.value)" />
+</div>
+</div>
+<div id="gameInfoWindowWidthPercentageBox">
+<div class="input-group" style="width: 10rem">
+<span class="input-group-text"><i class="bi bi-arrows"></i></span>
+<input type="number" class="form-control"
+id="gameInfoWindowWidthByPercentage" placeholder="100"
+onblur="changeGameInfoWindowNumber('widthByPercentage', this.value)" />
+<span class="input-group-text">%</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="gameInfoWindowHeightBox">
+<label class="form-label mt-4">Height</label>
+<div class="input-group" style="width: 8rem">
+<span class="input-group-text"><i class="bi bi-arrows-vertical"></i></span>
+<input type="number" class="form-control" id="gameInfoWindowHeight"
+placeholder="auto" onblur="changeGameInfoWindowNumber('height', this.value)" />
+</div>
+</div>
+
+</div>
+
+<div class="tab-pane" id="gameInfoWindowPropertiesContent" role="tabpanel">
+
+<div class="input-group mt-4">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-transparency me-2"></i>Opacity
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="gameInfoWindowOpacity"
+onblur="changeGameInfoWindowNumber('opacity', this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-square me-2"></i>Padding
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem;" type="number"
+id="gameInfoWindowPadding"
+onblur="changeGameInfoWindowNumber('padding', this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-arrows-vertical me-2"></i>
+Line Height
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="gameInfoWindowLineHeight"
+onblur="changeGameInfoWindowNumber('lineHeight', this.value)" />
+</div>
+<div class="input-group mt-2">
+<span class="input-group-text" style="width: 12rem">
+<i class="bi bi-fonts me-2"></i>Font Size
+</span>
+<input class="form-control" style="flex-grow: 0; flex-basis: 5rem" type="number"
+id="gameInfoWindowFontSize"
+onblur="changeGameInfoWindowNumber('fontSize', this.value)" />
+</div>
+
+<div class="row mt-4">
+<div class="col">
+<label class="form-label">Background</label>
+<select class="form-select" id="gameInfoWindowBackgroundType"
+onchange="changeGameInfoWindowBackgroundType(this.value)">
+<option value="window">Window</option>
+<option value="dimmed">Dimmed</option>
+<option value="image">Image</option>
+<option value="none">None</option>
+</select>
+</div>
+<div class="col">
+<div id="gameInfoWindowBackgroundImageBox">
+<label class="form-label">Image</label>
+<input type="file" class="form-control" accept=".png"
+onchange="changeGameInfoWindowPropertyFile('backgroundFile', this.value)" />
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="tab-pane" id="gameInfoWindowContentContent" role="tabpanel">
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="gameInfoWindow2ColumnsSwitch"
+onchange="changeGameInfoWindow2Columns(this.checked)">
+<label class="form-check-label">2 Columns</label>
+</div>
+
+<div class="d-flex mt-4 gap-4">
+<div class="flex-fill">
+<textarea class="form-control" rows="3" id="gameInfoTextLeft"
+onblur="changeGameInfoWindowProperty('textLeft', this.value)"></textarea>
+</div>
+<div id="gameInfoTextRightBox" class="flex-fill">
+<textarea class="form-control" rows="3" id="gameInfoTextRight"
+onblur="changeGameInfoWindowProperty('textRight', this.value)"></textarea>
+</div>
+</div>
+
+<p class="info mt-4">
+You may use Text Codes (e.g. \V[1], \C[2], ...). Use...
+<ul>
+<li class="info">\$ for current gold</li>
+<li class="info">\G for currency name</li>
+<li class="info">\MN for map name</li>
+<li class="info">\PT for playtime</li>
+<li class="info">\V[1] for Variable 1</li>
+</ul>
+</p>
+<button class="btn btn-link mz"
+onclick="window.open('http://www.yanfly.moe/wiki/Category:Text_Codes_(MZ)')">
+Lookup all Text Codes
+<i class="bi bi-box-arrow-up-right ms-2"></i>
+</button>
+<button class="btn btn-link mv"
+onclick="window.open('http://www.yanfly.moe/wiki/Category:Text_Codes_(MV)')">
+Lookup all Text Codes
+<i class="bi bi-box-arrow-up-right ms-2"></i>
+</button>
+
+</div>
+
+<div class="tab-pane" id="gameInfoWindowConditionsContent" role="tabpanel">
+
+<div class="d-flex align-items-end gap-4 mt-4">
+<div>
+<div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" id="gameInfoWindowRequireSwitch"
+data-bs-toggle="switch" data-bs-target="#gameInfoWindowRequiredSwitchBox"
+onchange="changeGameInfoWindowRequireSwitch(this.checked)">
+<label class="form-check-label">Switch</label>
+</div>
+</div>
+
+<div id="gameInfoWindowRequiredSwitchBox">
+<div class="d-flex align-items-baseline">
+<div class="input-group me-4" style="width: 8rem">
+<span class="input-group-text">Switch</span>
+<input type="number" class="form-control"
+id="gameInfoWindowRequiredSwitchId"
+onblur="changeGameInfoWindowNumber('requiredSwitchId', this.value)" />
+</div>
+<p class="mb-0 me-2">is</p>
+<select class="form-select" id="gameInfoWindowRequiredSwitchValue"
+onchange="changeGameInfoWindowProperty('requiredSwitchValue', this.value)">
+<option value="on">ON</option>
+<option value="off">OFF</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="gameInfoWindowRequireVariable"
+data-bs-toggle="switch" data-bs-target="#gameInfoWindowRequiredVariableBox"
+onchange="changeGameInfoWindowRequireVariable(this.checked)">
+<label class="form-check-label">Variable</label>
+</div>
+<div id="gameInfoWindowRequiredVariableBox">
+<div class="d-flex align-items-baseline mt-2">
+
+<div class="input-group me-4" style="width: 8rem">
+<span class="input-group-text">Var</span>
+<input type="number" class="form-control" id="gameInfoWindowRequiredVariableId"
+onblur="changeGameInfoWindowNumber('requiredVariableId', this.value)" />
+</div>
+<select class="form-select me-2" id="gameInfoWindowRequiredVariableOperator"
+onchange="changeGameInfoWindowProperty('requiredVariableOperator', this.value)">
+<option value="greaterThanOrEqual">&ge;</option>
+<option value="lessThanOrEqual">&le;</option>
+<option value="equal">=</option>
+<option value="notEqual">not</option>
+</select>
+<div style="width: 6rem">
+<input type="number" class="form-control"
+id="gameInfoWindowRequiredVariableValue" placeholder="0"
+onblur="changeGameInfoWindowNumber('requiredVariableValue', this.value)" />
+</div>
+</div>
+</div>
+
+<div class="form-check form-switch mt-4">
+<input class="form-check-input" type="checkbox" id="gameInfoWindowRequireScript"
+data-bs-toggle="switch" data-bs-target="#gameInfoWindowRequiredScriptBox"
+onchange="changeGameInfoWindowRequireScript(this.checked)">
+<label class="form-check-label">Script</label>
+</div>
+<div id="gameInfoWindowRequiredScriptBox">
+<div class="input-group mt-2">
+<span class="input-group-text">JavaScript</span>
+<input type="text" class="form-control" id="gameInfoWindowRequiredScript"
+onblur="changeGameInfoWindowProperty('requiredScript', this.value)" />
+</div>
+
+<p class="info mt-4">Examples:</p>
+<div class="custom-code">
+<pre>$gameSwitches.value(1) &amp;&amp; $gameVariables.value(1) &gt; 5</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-success" data-bs-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="deleteGameInfoWindowModal" tabindex="-1">
+<div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal-content">
+
+<div class="modal-header">
+<h5 class="modal-title mb-0">Delete?</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+<p class="info mb-0">
+This action cannot be undone.
+</p>
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-danger" onclick="confirmDeleteGameInfoWindow()" data-bs-dismiss="modal">
+Delete
+</button>
+<button class="btn btn-outline-secondary" data-bs-dismiss="modal">No, keep it</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="iconPickerModal" tabindex="-1">
+<style>
+#icon-selector {
+position: relative;
+display: inline-block;
+border-radius: 8px;
+overflow: hidden;
+}
+
+#highlight {
+position: absolute;
+width: 32px;
+height: 32px;
+border: 3px solid #bf0909;
+box-sizing: border-box;
+pointer-events: none;
+display: none;
+background-color: rgba(13, 110, 253, 0.1);
+}
+
+.result-box {
+font-size: 1.1rem;
+font-weight: 500;
+}
+</style>
+<div class="modal-dialog modal-dialog-centered" style="max-width: 90vw; width: 90vw;">
+<div class="modal-content">
+
+<div class="modal-header">
+<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body d-flex align-items-center justify-content-center">
+
+<div style="width: 512px" class="d-flex flex-column align-items-center">
+
+<div class="alert alert-light mt-4 mb-4">
+<span class="bi bi-lightbulb"></span>
+Tip: Double-click an icon to select & close dialog.
+</div>
+
+<div id="icon-selector" class="position-relative d-inline-block border rounded">
+<img id="iconSprite" src="../img/system/IconSet.png" alt="Icons">
+<div id="highlight"></div>
+</div>
+
+</div>
+</div>
+
+<div class="modal-footer">
+<button class="btn btn-primary" onclick="onChooseIconConfirm()">Confirm</button>
+<button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+</div>
+
+</div>
+</div>
+</div>
+</body>

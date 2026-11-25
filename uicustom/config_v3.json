@@ -1,0 +1,133 @@
+{
+  "actorLimit": 3,
+  "commandWidth": 240,
+  "commandPosition": "topCenter",
+  "actorWindowWidth": 650,
+  "actorWindowHeight": 157,
+  "actorFormation": [
+    {
+      "x": 240,
+      "y": 0
+    },
+    {
+      "x": 240,
+      "y": 156
+    },
+    {
+      "x": 240,
+      "y": 312
+    },
+    {
+      "x": 240,
+      "y": 468
+    }
+  ],
+  "mpLabelTextColor": 23,
+  "tpLabelTextColor": 28,
+  "levelLabelTextColor": 30,
+  "actorElements": [
+    {
+      "type": "portrait",
+      "hpMpTpSubType": "hp",
+      "parameterFamily": "primary",
+      "portrait": "face",
+      "position9Dir": "middleLeft",
+      "scale": 90,
+      "x": 9,
+      "hidden": false
+    },
+    {
+      "type": "name",
+      "hpMpTpSubType": "hp",
+      "parameterFamily": "primary",
+      "portrait": "face",
+      "x": 160,
+      "width": 200,
+      "fontSize": 30,
+      "textColor": 6,
+      "y": 8,
+      "hidden": false
+    },
+    {
+      "type": "classname",
+      "hpMpTpSubType": "hp",
+      "parameterFamily": "primary",
+      "portrait": "face",
+      "width": 200,
+      "textColor": 16,
+      "y": 8,
+      "position9Dir": "topRight",
+      "textAlign": "right",
+      "x": -6
+    },
+    {
+      "type": "hpMpTp",
+      "hpMpTpSubType": "hp",
+      "parameterFamily": "primary",
+      "portrait": "face",
+      "position9Dir": "bottomLeft",
+      "y": -30,
+      "x": 160,
+      "width": 300
+    },
+    {
+      "type": "hpMpTp",
+      "hpMpTpSubType": "mp",
+      "parameterFamily": "primary",
+      "portrait": "face",
+      "position9Dir": "bottomLeft",
+      "x": 180,
+      "width": 300
+    }
+  ],
+  "gameInfoWindows": [
+    {
+      "position9Dir": "bottomLeft",
+      "twoColumns": true,
+      "name": "Window #1",
+      "width": 240,
+      "textLeft": "\\I[314]\n\\I[190]\n\\I[220]",
+      "textRight": "\\$ \\C[16]\\G\n\\}\\MN\n\\PT",
+      "hidden": false,
+      "opacity": 255
+    }
+  ],
+  "commandOpacity": 255,
+  "commandTextAlign": "center",
+  "commandBackgroundType": "window",
+  "actorWindowBackgroundType": "window",
+  "actorWindowOpacity": 255,
+  "whenSelectingActorHorzDash": 8,
+  "whenSelectingActorAnimationSpeed": 2,
+  "elementIcons": [
+    77,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72
+  ],
+  "skillTypeIcons": [
+    79,
+    78,
+    77,
+    83
+  ],
+  "commandWindowOrientation": "vertical",
+  "commandPadding": 5,
+  "commandItemHeight": 51,
+  "commandRowSpacing": 0,
+  "commandStyle": "iconAndText",
+  "windowOpacity": 255,
+  "cursorStyle": "default",
+  "disabledTextOpacity": 60,
+  "overrideDisabledTextColor": true,
+  "disabledTextColor": "#ffffff",
+  "sceneBackgroundType": "none",
+  "hpCrisisTextColor": 17,
+  "commandInputMode": "left"
+}
